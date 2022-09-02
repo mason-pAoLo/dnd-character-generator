@@ -54,25 +54,17 @@ class _ToDoListState extends State<ToDoList> {
               ),
 
               // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions
-              ValueListenableBuilder<TextEditingValue>(
-                valueListenable: _inputController,
-                builder: (context, value, child) {
-                  return ElevatedButton(
+              ElevatedButton(
                     key: const Key("CancelButton"),
                     style: noStyle,
-                    onPressed: value.text.isNotEmpty
-                        ? () {
+                    child: const Text('Cancel'),
+                    onPressed: () {
                             setState(() {
-                              _handleNewItem(valueText);
                               Navigator.pop(context);
                             });
-                          }
-                        : null,
-                    child: const Text('Cancel'),
-                  );
-                },
-              ),
-            ],
+                          }                  
+                  )
+                  ]
           );
         });
   }

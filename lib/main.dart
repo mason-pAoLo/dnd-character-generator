@@ -35,15 +35,22 @@ class _ToDoListState extends State<ToDoList> {
                   const InputDecoration(hintText: "type something here"),
             ),
             actions: <Widget>[
-              ElevatedButton(
+            ValueListenableBuilder<TextEditingValue>(
+              valueListenable: _inputController,
+              builder: (context, value, child) {
+              return ElevatedButton(
                 key: const Key("OkButton"),
                 style: yesStyle,
-                child: const Text('OK'),
-                onPressed: () {
+                onPressed: value.text.isNotEmpty
+                        ? () {
                   setState(() {
+                    _handleNewItem(valueText);
                     Navigator.pop(context);
                   });
-                },
+                } : null,
+                child: const Text('OK'),
+              );
+              }
               ),
 
               // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions

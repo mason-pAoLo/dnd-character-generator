@@ -31,7 +31,6 @@ class ToDoListItem extends StatelessWidget {
     // parts of the tree can have different themes.
     // The BuildContext indicates where the build is
     // taking place and therefore which theme to use.
-
     return completed //
         ? Colors.black54
         : Theme.of(context).primaryColor;
@@ -59,7 +58,7 @@ class ToDoListItem extends StatelessWidget {
           : null,
       leading: CircleAvatar(
         backgroundColor: _getColor(context),
-        child: Text(item.name),
+        child: Text(item.abbrev()), //think the problem is here, this is where the item text gets transformed into the circle bg.
       ),
       title: Text(
         item.abbrev(),

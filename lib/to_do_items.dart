@@ -61,7 +61,7 @@ class ToDoListItem extends StatelessWidget {
         child: Text(item.abbrev()), //think the problem is here, this is where the item text gets transformed into the circle bg.
       ),
       title: Text(
-        item.abbrev(),
+        item.name,
         style: _getTextStyle(context),
       ),
     );

@@ -39,7 +39,7 @@ class _ToDoListState extends State<ToDoList> {
               valueListenable: _inputController,
               builder: (context, value, child) {
               return ElevatedButton(
-                key: const Key("OkButton"),
+                key: const Key("OKButton"),
                 style: yesStyle,
                 onPressed: value.text.isNotEmpty
                         ? () {
@@ -71,7 +71,7 @@ class _ToDoListState extends State<ToDoList> {
 
   String valueText = "";
 
-  final List<Item> items = [const Item(name: "add more todos")];
+  final List<Item> items = [const Item(name: "test")];
 
   final _itemSet = <Item>{};
 
@@ -85,11 +85,11 @@ class _ToDoListState extends State<ToDoList> {
 
       items.remove(item);
       if (!completed) {
-        print("Completing");
+        //print("Completing");
         _itemSet.add(item);
         items.add(item);
       } else {
-        print("Making Undone");
+        //print("Making Undone");
         _itemSet.remove(item);
         items.insert(0, item);
       }
@@ -98,14 +98,14 @@ class _ToDoListState extends State<ToDoList> {
 
   void _handleDeleteItem(Item item) {
     setState(() {
-      print("Deleting item");
+      //print("Deleting item");
       items.remove(item);
     });
   }
 
   void _handleNewItem(String itemText) {
     setState(() {
-      print("Adding new item");
+      //print("Adding new item");
       Item item = const Item(name: "itemText");
       items.insert(0, item);
       _inputController.clear();

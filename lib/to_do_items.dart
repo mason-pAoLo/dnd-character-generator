@@ -58,7 +58,7 @@ class ToDoListItem extends StatelessWidget {
           : null,
       leading: CircleAvatar(
         backgroundColor: _getColor(context),
-        child: Text(item.abbrev()), //think the problem is here, this is where the item text gets transformed into the circle bg.
+        child: Text(item.abbrev()), 
       ),
       title: Text(
         item.name,

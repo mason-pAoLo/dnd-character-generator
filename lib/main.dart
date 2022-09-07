@@ -39,7 +39,7 @@ class _ToDoListState extends State<ToDoList> {
               valueListenable: _inputController,
               builder: (context, value, child) {
               return ElevatedButton(
-                key: const Key("OKButton"),
+                key: const Key("OkButton"),
                 style: yesStyle,
                 onPressed: value.text.isNotEmpty
                         ? () {
@@ -106,7 +106,7 @@ class _ToDoListState extends State<ToDoList> {
   void _handleNewItem(String itemText) {
     setState(() {
       //print("Adding new item");
-      Item item = const Item(name: "itemText");
+      Item item = Item(name: itemText);
       items.insert(0, item);
       _inputController.clear();
     });

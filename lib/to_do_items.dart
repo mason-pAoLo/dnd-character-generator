@@ -26,10 +26,6 @@ class Item {
       return true;
     } return false;
   }
-    
-    //Icons.favorite;
-    //color: Colors.orange;
-    //size : 24.0;
 
   }
 
@@ -89,9 +85,11 @@ class ToDoListItem extends StatelessWidget {
         item.name,
         style: _getTextStyle(context),
       ),
-      //trailing : Icon2(decider : item.name)(
-        //Icon2.iconChoice(item);
-       //)
-    );
+      trailing: const Icon(
+        Icons.favorite,
+        color: Colors.orange,
+        size : 24.0,
+      ),
+       );
   }
 }

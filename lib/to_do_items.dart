@@ -9,11 +9,36 @@ class Item {
     return name.substring(0, 1); 
   }
 }
+ class Icon2{
+  final String decider;
+    const Icon2({required this.decider});
+
+  bool iconChoice(Item item){
+    if (item.abbrev() == 'a'){
+      return true;
+    }else if (item.abbrev() == 'e'){
+      return true;
+    }else if (item.abbrev() == 'i'){
+      return true;
+    }else if (item.abbrev() == 'o'){
+      return true;
+    }else if(item.abbrev() == 'u'){
+      return true;
+    } return false;
+  }
+    
+    //Icons.favorite;
+    //color: Colors.orange;
+    //size : 24.0;
+
+  }
 
 typedef ToDoListChangedCallback = Function(Item item, bool completed);
 typedef ToDoListRemovedCallback = Function(Item item);
 
 class ToDoListItem extends StatelessWidget {
+
+
   ToDoListItem(
       {required this.item,
       required this.completed,
@@ -64,6 +89,9 @@ class ToDoListItem extends StatelessWidget {
         item.name,
         style: _getTextStyle(context),
       ),
+      //trailing : Icon2(decider : item.name)(
+        //Icon2.iconChoice(item);
+       //)
     );
   }
 }

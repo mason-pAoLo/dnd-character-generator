@@ -84,12 +84,11 @@ class _ToDoListState extends State<ToDoList> {
       // which updates the visual appearance of the app.
 
       items.remove(item);
+      //Think I need to put the icon color change here maybe.
       if (!completed) {
-        //print("Completing");
         _itemSet.add(item);
         items.add(item);
       } else {
-        //print("Making Undone");
         _itemSet.remove(item);
         items.insert(0, item);
       }

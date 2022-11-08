@@ -56,6 +56,9 @@ class ToDoListItem extends StatelessWidget {
         ? Colors.black54
         : Theme.of(context).primaryColor;
   }
+  void onTapped(){
+      
+  }
 
   TextStyle? _getTextStyle(BuildContext context) {
     if (!completed) return null;
@@ -85,11 +88,10 @@ class ToDoListItem extends StatelessWidget {
         item.name,
         style: _getTextStyle(context),
       ),
-      trailing: const Icon(
-        Icons.favorite,
-        color: Colors.orange,
-        size : 24.0,
-      ),
+      trailing: IconButton(
+        icon: Icon(Icons.favorite),
+        onPressed: onTapped,
+        iconSize: 24,) 
        );
   }
 }

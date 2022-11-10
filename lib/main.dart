@@ -9,6 +9,8 @@ class ToDoList extends StatefulWidget {
   State createState() => _ToDoListState();
 }
 
+//test comment
+
 class _ToDoListState extends State<ToDoList> {
   // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
   final TextEditingController _inputController = TextEditingController();
@@ -23,49 +25,47 @@ class _ToDoListState extends State<ToDoList> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Item To Add'),
-            content: TextField(
-              onChanged: (value) {
-                setState(() {
-                  valueText = value;
-                });
-              },
-              controller: _inputController,
-              decoration:
-                  const InputDecoration(hintText: "type something here"),
-            ),
-            actions: <Widget>[
-            ValueListenableBuilder<TextEditingValue>(
-              valueListenable: _inputController,
-              builder: (context, value, child) {
-              return ElevatedButton(
-                key: const Key("OkButton"),
-                style: yesStyle,
-                onPressed: value.text.isNotEmpty
-                        ? () {
+              title: const Text('Item To Add'),
+              content: TextField(
+                onChanged: (value) {
                   setState(() {
-                    _handleNewItem(valueText);
-                    Navigator.pop(context);
+                    valueText = value;
                   });
-                } : null,
-                child: const Text('OK'),
-              );
-              }
+                },
+                controller: _inputController,
+                decoration:
+                    const InputDecoration(hintText: "type something here"),
               ),
+              actions: <Widget>[
+                ValueListenableBuilder<TextEditingValue>(
+                    valueListenable: _inputController,
+                    builder: (context, value, child) {
+                      return ElevatedButton(
+                        key: const Key("OkButton"),
+                        style: yesStyle,
+                        onPressed: value.text.isNotEmpty
+                            ? () {
+                                setState(() {
+                                  _handleNewItem(valueText);
+                                  Navigator.pop(context);
+                                });
+                              }
+                            : null,
+                        child: const Text('OK'),
+                      );
+                    }),
 
-              // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions
-              ElevatedButton(
+                // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions
+                ElevatedButton(
                     key: const Key("CancelButton"),
                     style: noStyle,
                     child: const Text('Cancel'),
                     onPressed: () {
-                            setState(() {
-                              Navigator.pop(context);
-                            });
-                          }                  
-                  )
-                  ]
-          );
+                      setState(() {
+                        Navigator.pop(context);
+                      });
+                    })
+              ]);
         });
   }
 

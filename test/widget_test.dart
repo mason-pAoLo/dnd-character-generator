@@ -24,7 +24,9 @@ void main() {
             body: ToDoListItem(
                 item: const Item(name: "test"),
                 completed: true,
-                onListChanged: (Item item, bool completed) {},
+                favorited: false,
+                onListChanged: (Item item, bool completed, bool favorited,
+                    String action) {},
                 onDeleteItem: (Item item) {}))));
     final textFinder = find.text('test');
 
@@ -40,7 +42,9 @@ void main() {
             body: ToDoListItem(
                 item: const Item(name: "test"),
                 completed: true,
-                onListChanged: (Item item, bool completed) {},
+                favorited: false,
+                onListChanged: (Item item, bool completed, bool favorited,
+                    String action) {},
                 onDeleteItem: (Item item) {}))));
     final abbvFinder = find.text('t');
     final avatarFinder = find.byType(CircleAvatar);

@@ -6,44 +6,26 @@ class Item {
   final String name;
 
   String abbrev() {
-    return name.substring(0, 1); 
+    return name.substring(0, 1);
   }
 }
- class Icon2{
-  final String decider;
-    const Icon2({required this.decider});
 
-  bool iconChoice(Item item){
-    if (item.abbrev() == 'a'){
-      return true;
-    }else if (item.abbrev() == 'e'){
-      return true;
-    }else if (item.abbrev() == 'i'){
-      return true;
-    }else if (item.abbrev() == 'o'){
-      return true;
-    }else if(item.abbrev() == 'u'){
-      return true;
-    } return false;
-  }
-
-  }
-
-typedef ToDoListChangedCallback = Function(Item item, bool completed);
+typedef ToDoListChangedCallback = Function(
+    Item item, bool completed, bool favorited, String action);
 typedef ToDoListRemovedCallback = Function(Item item);
 
 class ToDoListItem extends StatelessWidget {
-
-
   ToDoListItem(
       {required this.item,
       required this.completed,
       required this.onListChanged,
-      required this.onDeleteItem})
+      required this.onDeleteItem,
+      required this.favorited})
       : super(key: ObjectKey(item));
 
   final Item item;
   final bool completed;
+  final bool favorited;
   final ToDoListChangedCallback onListChanged;
   final ToDoListRemovedCallback onDeleteItem;
 
@@ -55,9 +37,6 @@ class ToDoListItem extends StatelessWidget {
     return completed //
         ? Colors.black54
         : Theme.of(context).primaryColor;
-  }
-  void onTapped(){
-      
   }
 
   TextStyle? _getTextStyle(BuildContext context) {
@@ -72,26 +51,29 @@ class ToDoListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {
-        onListChanged(item, completed);
-      },
-      onLongPress: completed
-          ? () {
-              onDeleteItem(item);
-            }
-          : null,
-      leading: CircleAvatar(
-        backgroundColor: _getColor(context),
-        child: Text(item.abbrev()), 
-      ),
-      title: Text(
-        item.name,
-        style: _getTextStyle(context),
-      ),
-      trailing: IconButton(
-        icon: Icon(Icons.favorite),
-        onPressed: onTapped,
-        iconSize: 24,) 
-       );
+        onTap: () {
+          onListChanged(item, completed, favorited, "completed");
+        },
+        onLongPress: completed
+            ? () {
+                onDeleteItem(item);
+              }
+            : null,
+        leading: CircleAvatar(
+          backgroundColor: _getColor(context),
+          child: Text(item.abbrev()),
+        ),
+        title: Text(
+          item.name,
+          style: _getTextStyle(context),
+        ),
+        trailing: IconButton(
+            key: Key('favButton'),
+            icon: Icon(Icons.favorite),
+            onPressed: () {
+              onListChanged(item, completed, favorited, "favorited");
+            },
+            iconSize: 24,
+            color: favorited ? Colors.red[900] : Colors.grey[500]));
   }
 }

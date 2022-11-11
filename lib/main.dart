@@ -9,15 +9,13 @@ class ToDoList extends StatefulWidget {
   State createState() => _ToDoListState();
 }
 
-//test comment
-
 class _ToDoListState extends State<ToDoList> {
   // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
   final TextEditingController _inputController = TextEditingController();
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20), primary: Colors.green);
+      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green);
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
-      textStyle: const TextStyle(fontSize: 20), primary: Colors.red);
+      textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
 
   Future<void> _displayTextInputDialog(BuildContext context) async {
     print("Loading Dialog");
@@ -71,27 +69,52 @@ class _ToDoListState extends State<ToDoList> {
 
   String valueText = "";
 
-  final List<Item> items = [const Item(name: "test")];
+  List<Item> items = [const Item(name: "test")];
+  final _unmarkedItems = <Item>{const Item(name: "test")};
+  final _completedItems = <Item>{};
+  final _favoritedItems = <Item>{};
 
-  final _itemSet = <Item>{};
+  @override
+  void initState() {
+    super.initState();
+  }
 
-  void _handleListChanged(Item item, bool completed) {
+  void _handleListChanged(
+      Item item, bool completed, bool favorited, String action) {
     setState(() {
-      // When a user changes what's in the list, you need
-      // to change _itemSet inside a setState call to
-      // trigger a rebuild.
-      // The framework then calls build, below,
-      // which updates the visual appearance of the app.
+      List<Item> newItemList = [];
+      _unmarkedItems.remove(item);
 
-      items.remove(item);
-      //Think I need to put the icon color change here maybe.
-      if (!completed) {
-        _itemSet.add(item);
-        items.add(item);
-      } else {
-        _itemSet.remove(item);
-        items.insert(0, item);
+      if (action == "completed") {
+        if (!completed) {
+          _completedItems.add(item);
+          _unmarkedItems.remove(item);
+        } else {
+          _completedItems.remove(item);
+          _unmarkedItems.add(item);
+        }
+        if (favorited) {
+          _favoritedItems.remove(item);
+        }
       }
+
+      if (action == "favorited") {
+        if (!completed) {
+          if (!favorited) {
+            _favoritedItems.add(item);
+            _unmarkedItems.remove(item);
+          } else {
+            _favoritedItems.remove(item);
+            _unmarkedItems.add(item);
+          }
+        }
+      }
+
+      newItemList.addAll(_favoritedItems);
+      newItemList.addAll(_unmarkedItems);
+      newItemList.addAll(_completedItems);
+
+      items = newItemList;
     });
   }
 
@@ -99,6 +122,7 @@ class _ToDoListState extends State<ToDoList> {
     setState(() {
       //print("Deleting item");
       items.remove(item);
+      _completedItems.remove(item);
     });
   }
 
@@ -106,7 +130,8 @@ class _ToDoListState extends State<ToDoList> {
     setState(() {
       //print("Adding new item");
       Item item = Item(name: itemText);
-      items.insert(0, item);
+      items.add(item);
+      _unmarkedItems.add(item);
       _inputController.clear();
     });
   }
@@ -122,7 +147,8 @@ class _ToDoListState extends State<ToDoList> {
           children: items.map((item) {
             return ToDoListItem(
               item: item,
-              completed: _itemSet.contains(item),
+              completed: _completedItems.contains(item),
+              favorited: _favoritedItems.contains(item),
               onListChanged: _handleListChanged,
               onDeleteItem: _handleDeleteItem,
             );
